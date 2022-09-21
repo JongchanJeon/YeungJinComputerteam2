@@ -1,4 +1,4 @@
-# YeongJinComputerteam2
+# YeungJinComputerteam2
 
 # :pray: 조별 활동 계획서 :pray:
 
