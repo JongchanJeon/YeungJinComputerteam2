@@ -2,11 +2,9 @@
 
 <br>
 
-![image]([https://user-images.githubusercontent.com/103193673/192231375-96c045db-9673-4e0f-a7f0-4eebc0b42416.png](https://github.com/JongchanJeon/YeungJinComputerteam2/blob/746ce92f761a61349f35e358d5b9e6b28f7e1565/%EC%9A%B0%EB%A6%AC%EB%93%A4%EC%9D%98%20%EC%82%AC%EC%A7%84/20220929(%EB%B0%95%EB%9E%8C%ED%9A%8C)/20220929_123447.jpg))
-
+![1665042657012](https://user-images.githubusercontent.com/103583674/194251076-8d019c11-e2a7-4f32-9ac9-c2762682c312.jpg)
 
 <br>
-
 
 🔥주요 내용🔥 : <br>
 * 부산 벡스코에서 개최한 AI KOREA 2022 박람회 참석  <br>
