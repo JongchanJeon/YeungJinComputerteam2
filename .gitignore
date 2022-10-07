@@ -1,0 +1,10 @@
+
+project/member01/.classpath
+project/member01/.project
+*.MF
+project/member01/.settings/.jsdtscope
+*.prefs
+*.xml
+*.component
+*.container
+*.name
