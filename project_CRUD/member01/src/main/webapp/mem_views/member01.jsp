@@ -11,7 +11,7 @@
 
 <img src="../images/member01.PNG" width="1024"/>
 <h1>MEMBER01 페이지 호출 결과</h1>
-<a href="../index.jsp">메인으로 돌아가기</a>
+<a href="/member01/index.jsp">메인으로 돌아가기</a>
 
 <%@ include file="../footer.jsp" %>
 </body>
