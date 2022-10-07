@@ -8,3 +8,6 @@ project/member01/.settings/.jsdtscope
 *.component
 *.container
 *.name
+*.properties
+*.policy
+project/Servers/.project
