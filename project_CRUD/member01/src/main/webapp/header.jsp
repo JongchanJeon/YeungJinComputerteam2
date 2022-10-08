@@ -18,8 +18,14 @@
 <%
 	if( session.isNew()){
 		session.setAttribute("loginState", "logout");
+		session.setAttribute("viewState", "main");
 		session.setAttribute("userid", null);
 		session.setAttribute("userpw", null);
+		session.setAttribute("usernum", null);
+		session.setAttribute("useremail", null);
+		session.setAttribute("userphone", null);
+		session.setAttribute("userclass", null);
+		session.setAttribute("username", null);
 	}
 %>
 

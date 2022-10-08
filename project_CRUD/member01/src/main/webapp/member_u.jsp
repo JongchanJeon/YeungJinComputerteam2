@@ -3,7 +3,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +20,43 @@
 </head>
 <body>
 <%@ include file="../header.jsp" %>
+<%
+	String driverName = "org.mariadb.jdbc.Driver";
+	String url = "jdbc:mariadb://localhost/member_db";
+	String user = "root";
+	String passwd = "root";
+	
+	Class.forName(driverName);
+	Connection con = DriverManager.getConnection(url, user, passwd);
+	Statement stmt = con.createStatement();
+	request.setCharacterEncoding("utf-8");
+%>
+<%
+	int mem_num;
+	String mem_name;
+	String mem_id;
+	String mem_passwd;
+	String mem_email;
+	String mem_phone;
+	String mem_RRN;
+	String mem_class;
+	
+String sql = "select * from member where mem_id = '" + (String) session.getAttribute("userid") + "'";
+	System.out.println(sql);
+	ResultSet rs = stmt.executeQuery(sql);
+	while (rs.next()) {
+		mem_name = rs.getString("mem_name");
+		mem_id = rs.getString("mem_id");
+		mem_passwd = rs.getString("mem_passwd");
+		mem_email = rs.getString("mem_email");
+		mem_phone = rs.getString("mem_phone");
+		mem_RRN = rs.getString("mem_RRN");
+		mem_class = rs.getString("mem_class");
+		System.out.println(mem_RRN);
+		
+		System.out.println(session.getAttribute("userpw"));
+	}
+%>
 
 <div class="container row">
     <div class="col-lg-5"></div>
@@ -30,39 +67,39 @@
             <form class="validation-form" method="post" action="../member01/member_dao.jsp"> <!-- 경로 수정  !-->
 
                 <div class="form-group">
-                    <input class="form-control mb-2" type="text" name="mem_name" placeholder="이름" value="">
+                	<input class="form-control mb-2" type="text" name = "mem_name" value = <%=session.getAttribute("username")%>>             
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control mb-2" type="text" name="mem_id" placeholder="아이디" value="" required disabled>
+                    <input class="form-control mb-2" type="text" name="mem_id" placeholder="아이디" value=<%=session.getAttribute("userid")%> required disabled>
                 </div>
                 <div class="form-group">
-                    <input class="form-control mb-2"  type="text" name="mem_passwd"  placeholder="비밀번호" value="" required>
+                    <input class="form-control mb-2"  type="text" name="mem_passwd"  placeholder="비밀번호"  required>
                 </div>
 
                 <div class="form-group has-danger">
-                    <input class="form-control mb-2"  type="text" name="" placeholder="비밀번호 재확인" value="" required> <!-- name 추가 !-->
+                    <input class="form-control mb-2"  type="text" name="" placeholder="비밀번호 재확인"  required> <!-- name 추가 !-->
                 </div>
                 <div class="form-group">
 
-                    <input class="form-control mb-2"  type="email" name="mem_email" placeholder="이메일 @ " value="">
+                    <input class="form-control mb-2"  type="email" name="mem_email" placeholder="이메일 @ " value=<%=session.getAttribute("useremail")%>>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control mb-2"  type="text" name="mem_phone" oninput="autoHyphen(this)" value="" maxlength="12" placeholder="핸드폰(숫자만 입력해주세요)">
+                    <input class="form-control mb-2"  type="text" name="mem_phone" oninput="autoHyphen(this)" value=<%=session.getAttribute("userphone")%> maxlength="12" placeholder="핸드폰(숫자만 입력해주세요)">
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control mb-2" id="mem_RRN1" placeholder="주민번호 ( 6자리 -" value="" maxlength="6" required disabled> <!-- name 변경 !-->
+                        <input type="text" class="form-control mb-2" id="mem_RRN1" placeholder="주민번호 ( 6자리 -" value=<%=String.valueOf(session.getAttribute("userRRN")).substring(0, 6) %> maxlength="6" required disabled> <!-- name 변경 !-->
                     </div>
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control mb-2" id="mem_RRN2" placeholder=" 7자리 )" value="" maxlength="7" required disabled> <!-- name 변경 !-->
+                        <input type="text" class="form-control mb-2" id="mem_RRN2" placeholder=" 7자리 )" value=<%=String.valueOf(session.getAttribute("userRRN")).substring(7, 14) %> maxlength="7" required disabled> <!-- name 변경 !-->
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control mb-2" type="text" name="mem_class" placeholder="등급" value="" disabled>
+                    <input class="form-control mb-2" type="text" name="mem_class" placeholder="등급" value=<%=session.getAttribute("userclass")%> disabled>
                 </div>
 				
                 <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#exampleModal1">삭제</button>
