@@ -46,7 +46,7 @@
 				</li>
 			</ul>
     	<span class="navbar-text">
-			<small><i>원하는 메뉴를 클릭하세요!</i></small>
+			<small><i>원하는 메뉴를 클릭하세요요요요요!</i></small>
     	</span>
 	</div>
 </nav>
