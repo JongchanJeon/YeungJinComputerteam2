@@ -30,7 +30,7 @@
 <%
 		        } else {
 %>
-		        	<a class="nav-link" href="/member01/member_m.jsp?currentPageNo=0&limitCnt=10">조회 및 수정</a>
+		        	<a class="nav-link" href="/member01/member_m.jsp">조회 및 수정</a>
 <%
 		        }
 %>

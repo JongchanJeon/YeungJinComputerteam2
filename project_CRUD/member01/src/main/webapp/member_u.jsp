@@ -156,4 +156,12 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
 
 <%@ include file="../footer.jsp" %>
 </body>
+<script type="text/javascript">
+    const autoHyphen = (target) => {
+        target.value = target.value
+            .replace(/[^0-9]/, '')
+            .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+    }
+
+</script>
 </html>

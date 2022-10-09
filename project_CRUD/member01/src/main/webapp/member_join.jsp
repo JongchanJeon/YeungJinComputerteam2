@@ -36,6 +36,7 @@
 
 <meta charset="UTF-8">
 <title>회원가입</title>
+ 
 </head>
 <body>
 <%@ include file="./header.jsp" %>
@@ -88,16 +89,15 @@
 
 					<div class="row">
 						<div class="col-md-4 mb-3">
-							<input type="text" class="form-control mb-2" name="mem_RRN1"
+							<input type="text" class="form-control mb-2" name="mem_RRN1" id="mem_RRN1"
 								placeholder="주민번호 ( 6자리 -" maxlength="6" required>
 						</div>
 						<div class="col-md-5 mb-3">
-							<input type="text" class="form-control mb-2" name="mem_RRN2"
+							<input type="text" class="form-control mb-2" name="mem_RRN2" id="mem_RRN2"
 								placeholder=" 7자리 )" maxlength="7" required>
 						</div>
 						<div class="col-md-3 mb-2">
-							<input class=" btn btn-secondary" type="button" value="사용자 인증">
-							<!-- 데이터 추가  -->
+							<input class=" btn btn-secondary" type="button" onclick="checkRRN();" value="사용자 인증" >
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success float-right"
@@ -117,15 +117,41 @@
 		<div class="col-lg-4"></div>
 	</div>
 <%@ include file="./footer.jsp" %>
-</body>
 <script type="text/javascript">
+    function checkRRN() {
+		<%System.out.println("함수 ");%>
+        let sum = 0;
+        let count = 2;
+        let lastRRN = 0;
+        let mem_RRN = document.getElementById("mem_RRN1").value + document.getElementById("mem_RRN2").value;
+        for(let i = 0; i < 12; i++){
+            if (count > 9) {
+                count = 2;
+            }
+            sum += mem_RRN[i] * count;
+            count++;
+        }
+        lastRRN = 11 - (sum % 11);
+        if(lastRRN == 11){
+            lastRRN = 1;
+        }else if (lastRRN == 10) {
+            lastRRN = 0;
+        }
+        if(mem_RRN[12] == lastRRN){
+            alert("사용자 인증이 되었습니다.");
+        }else {
+            alert("사용자 인증에 실패하였습니다!");
+        }
 
+    }
     const autoHyphen = (target) => {
         target.value = target.value
             .replace(/[^0-9]/, '')
             .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
     }
 
-
 </script>
+</body>
+
+
 </html>

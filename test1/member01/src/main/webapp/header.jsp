@@ -17,17 +17,9 @@
 
 <%
 	if( session.isNew()){
-		session.setAttribute("loginState", "managerLogin");
+		session.setAttribute("loginState", "logout");
 		session.setAttribute("userid", null);
 		session.setAttribute("userpw", null);
-		session.setAttribute("viwState", "main");
-		session.setAttribute("mem_num", null);
-		session.setAttribute("mem_name", null);
-		session.setAttribute("mem_id", null);
-		session.setAttribute("mem_pw", null);
-		session.setAttribute("mem_email", null);
-		session.setAttribute("mem_phone", null);
-		session.setAttribute("mem_class", null);
 	}
 %>
 
