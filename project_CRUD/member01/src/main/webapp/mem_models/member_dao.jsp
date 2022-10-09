@@ -23,6 +23,7 @@
 	Class.forName(driverName);
 	Connection con = DriverManager.getConnection(url, user, passwd);
 	Statement stmt = con.createStatement();
+	PreparedStatement pstmt = null;
 	request.setCharacterEncoding("utf-8");
 
 	int mem_num;
@@ -49,35 +50,40 @@
 	int loginState;
 
 	switch( actionType){
-		case "CREATE":	// 회원가입
-			System.out.println("\n-------[member_dao.jsp - actionType: CREATE]---------\n");
-			
-			mem_name = request.getParameter("mem_name");
-			mem_id = request.getParameter("mem_id");
-			mem_passwd = request.getParameter("mem_passwd");
-			mem_email = request.getParameter("mem_email");
-			mem_phone = request.getParameter("mem_phone");
-			mem_RRN = request.getParameter("mem_RRN");
-			
-			sql = "INSERT INTO member (mem_name, mem_id, mem_passwd, mem_email, mem_contact, mem_RRN) VALUES ('";
-			sql += mem_name + "', '"  + mem_id + "', '" + mem_passwd + "','" + mem_email + "','" + mem_phone + "','" + mem_RRN + "');";
-			
-			System.out.println(sql);
-			
-			int result = stmt.executeUpdate(sql);
-			
-			if(result == 1) {
-				System.out.println("[member_dao.jsp] 레코드 추가 성공");
-				out.println("<script>");
-			    out.println("alert('회원가입에 성공하였습니다.');");	// alert가 왜 안되냐 진짜;;;;;;;
-			    out.println("</script>");
-			} else {
-				System.out.println("[member_dao.jsp] 레코드 추가 실패");
-			}
-			
-			session.setAttribute("loginState", "logout");
-			break;
-			// 회원가입 부분(CREATE)은 사용하지 않음.
+	
+	case "CREATE":	// 회원가입
+		System.out.println("\n-------[member_dao.jsp - actionType: CREATE]---------\n");
+		
+		mem_name = request.getParameter("mem_name");
+		mem_id = request.getParameter("mem_id");
+		mem_passwd = request.getParameter("mem_passwd");
+		mem_email = request.getParameter("mem_email");
+		mem_phone = request.getParameter("mem_phone");
+		mem_RRN = String.valueOf(request.getParameter("mem_RRN1"))+"-"+String.valueOf(request.getParameter("mem_RRN2"));
+		
+		sql = "INSERT INTO member (mem_name, mem_id, mem_passwd, mem_email, mem_phone, mem_RRN, mem_class) VALUES (?,?,?,?,?,?,?)";
+		pstmt = con.prepareStatement(sql);
+		   pstmt.setString(1, mem_name);
+		   pstmt.setString(2, mem_id);
+		   pstmt.setString(3, mem_passwd);
+		   pstmt.setString(4, mem_email);
+		   pstmt.setString(5, mem_phone);
+		   pstmt.setString(6, mem_RRN);
+		   pstmt.setString(7, "user");
+		
+		System.out.println(sql);
+		
+		int result = pstmt.executeUpdate();
+		
+		if(result == 1) {
+			System.out.println("[member_dao.jsp] 레코드 추가 성공");
+		} else {
+			System.out.println("[member_dao.jsp] 레코드 추가 실패");
+		}
+		
+		session.setAttribute("loginState", "logout");
+		break;
+		// 회원가입 부분(CREATE)은 사용하지 않음.
 	
 		case "LOGIN":	// 로그인
 			int usernum = -1;
