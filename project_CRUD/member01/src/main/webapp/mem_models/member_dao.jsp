@@ -32,6 +32,7 @@
 	String mem_email;
 	String mem_phone;
 	String mem_RRN;
+	String mem_class;
 	// sql 결과로 나온 레코드의 값들을 저장할 변수
 	
 	String userID;
@@ -179,24 +180,108 @@
 			session.setAttribute("loginState", "register");
 			break;
 		
-		case "UPDATE":
+		case "수정":
 			System.out.println("\n-------[member_dao.jsp - actionType: UPDATE]---------\n");
-			
+			String mem_passwdCheck;
 			mem_name = request.getParameter("mem_name");
-			mem_id = request.getParameter("mem_id");
+			mem_id = String.valueOf(session.getAttribute("userid"));
 			mem_passwd = request.getParameter("mem_passwd");
+			mem_passwdCheck = request.getParameter("mem_passwdCheck");
 			mem_email = request.getParameter("mem_email");
 			mem_phone = request.getParameter("mem_phone");
 			mem_RRN = request.getParameter("mem_RRN");
-			System.out.println(mem_name);
+			mem_class = request.getParameter("userclass");
+			System.out.println(mem_passwdCheck);
+			sql ="update member set mem_name='" + mem_name + "', mem_passwd='" + mem_passwd + "',mem_email='" + mem_email + "',mem_phone='" + mem_phone +"'" ;
+			sql += "where mem_id ='" + mem_id +"'"; 
+			System.out.println(sql);
+			if(mem_passwd.equals(mem_passwdCheck)){
+				result = stmt.executeUpdate(sql);
+				
+				if(result == 1){
+					System.out.println("회원정보 수정 성공");
+					%>
+					<script>alert("회원 정보를 수정을 하였습니다.");</script>
+					<script>alert("다시 로그인을 해주세요");</script>
+					<%
+				}
+				else {
+					System.out.println("회원정보 수정 실패");
+					%>
+					<script>alert("예상치 못한 이유로 수정을 실패하였습니다.");</script>
+					<script>alert("다시 로그인을 해주세요");</script>
+					<%
+				}
+				session.setAttribute("userid", null);
+				session.setAttribute("userpw", null);
+	            session.setAttribute("username", null);
+	            session.setAttribute("useremail", null);
+	            session.setAttribute("userphone", null);
+	            session.setAttribute("userclass", null);
+	            session.setAttribute("userRRN", null);
+				session.setAttribute("loginState", "logout");
+				System.out.println("로그아웃 처리 완료");
+			}else {
+				System.out.println("비밀번호 불일치");
+				%>
+				<script>alert("비밀번호가 일치하지 않습니다!");</script>
+				<script>location.href="../member_u.jsp"</script>
+				<%
+			}
 			
+			break;
+			
+		case "삭제":
+			mem_passwd = request.getParameter("mem_passwd");
+			mem_passwdCheck = request.getParameter("mem_passwdCheck");
+			mem_id = String.valueOf(session.getAttribute("userid"));
+			if(mem_passwd.equals(mem_passwdCheck) && mem_passwd.equals(String.valueOf(session.getAttribute("userpw")))){
+				sql = "delete from member ";
+				sql += "where mem_id = '" + mem_id +"'";
+				System.out.println("sql : " + sql);
+				
+				result = stmt.executeUpdate(sql);
+				if(result == 1){
+					System.out.println("회원 삭제 성공");
+					
+					session.setAttribute("userid", null);
+					session.setAttribute("userpw", null);
+		            session.setAttribute("username", null);
+		            session.setAttribute("useremail", null);
+		            session.setAttribute("userphone", null);
+		            session.setAttribute("userclass", null);
+		            session.setAttribute("userRRN", null);
+					session.setAttribute("loginState", "logout");
+					%>
+					<script>alert("회원삭제가 정상적으로 되었습니다.");</script>
+					<%
+					System.out.println("로그아웃 처리 완료");
+				}
+				else {
+					%>
+					<script>alert("회원삭제를 실패하였습니다..");</script>
+					<script>location.href="../member_u.jsp"</script>
+					<%
+					System.out.println("회원 삭제 실패");
+
+				}
+				
+			}else {
+				System.out.println("비밀번호 불일치");
+				%>
+				<script>alert("비밀번호가 일치하지 않습니다!");</script>
+				<script>location.href="../member_u.jsp"</script>
+				<%
+			}
+			break;
 		default:
 			break;
 	}
 	
 %>
 
-<jsp:forward page="../index.jsp"/>
+<script>location.href="../index.jsp"</script>
+
 
 </body>
 </html>
