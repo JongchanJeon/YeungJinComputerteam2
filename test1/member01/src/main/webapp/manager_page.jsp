@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-12 col-sm-8 col-lg-5">
 				<ul class="list-group">
-					<a href="/member01/member_m.jsp" class="list-group-item list-group-item-action">
+					<a href="/member01/member_m.jsp?currentPageNo=0&limitCnt=10" class="list-group-item list-group-item-action">
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							<i class="bi-person-lines-fill" style="font-size: 64px;"></i>
 							<div style="margin-left: 20px">

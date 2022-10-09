@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+ <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,7 @@
 	Statement stmt = con.createStatement();
 	PreparedStatement pstmt = null;
 	request.setCharacterEncoding("utf-8");
+	PrintWriter script = response.getWriter();
 
 	int mem_num;
 	String mem_name;
@@ -34,6 +36,7 @@
 	String mem_phone;
 	String mem_RRN;
 	String mem_class;
+	String memState;
 	// sql 결과로 나온 레코드의 값들을 저장할 변수
 	
 	String userID;
@@ -77,8 +80,14 @@
 		
 		if(result == 1) {
 			System.out.println("[member_dao.jsp] 레코드 추가 성공");
+			%>
+			<script>alert("정상적으로 회원가입이 되었습니다!")</script>
+			<%
 		} else {
 			System.out.println("[member_dao.jsp] 레코드 추가 실패");
+			%>
+			<script>alert("비정상적 접근입니다.")</script>
+			<%
 		}
 		
 		session.setAttribute("loginState", "logout");
@@ -128,39 +137,21 @@
 				System.out.println("[member_dao.jsp] getPw: " + userpasswd);
 				System.out.println("[member_dao.jsp] getClass: " + userclass);
 				
-				if( userID.equals(userid)){
-			    	if( userPW.equals(userpasswd)){
-			    		if(userclass.equals("관리자")){	// memClass 컬럼을 통해 관리자 또는 일반 사용자 판단
-			    			session.setAttribute("loginState", "managerLogin");
-				    		session.setAttribute("userid", userid);
-				    		session.setAttribute("userpw", userpasswd);
-			                session.setAttribute("username", username); //유저 이름 저장
-			                session.setAttribute("useremail", useremail); //유저 이메일 저장
-			                session.setAttribute("userphone", userphone); //유저 휴대폰 저장
-			                session.setAttribute("userclass", userclass); //유저 등급 저장
-			                session.setAttribute("userRRN", userRRN); //유저 등급 저장
-				    		System.out.println("[member_dao.jsp] session userid:" + session.getAttribute("userid"));
-				    		System.out.println("[member_dao.jsp] session loginState:" + session.getAttribute("loginState"));
-				    		System.out.println("관리자 로그인 처리 완료");
-			    		}else{
-			    			session.setAttribute("loginState", "login");
-				    		session.setAttribute("userid", userid);
-				    		session.setAttribute("userpw", userpasswd);
-			                session.setAttribute("username", username); //유저 이름 저장
-			                session.setAttribute("useremail", useremail); //유저 이메일 저장
-			                session.setAttribute("userphone", userphone); //유저 휴대폰 저장
-			                session.setAttribute("userclass", userclass); //유저 등급 저장
-			                session.setAttribute("userRRN", userRRN); //유저 등급 저장
-				    		System.out.println("[member_dao.jsp] session userid:" + session.getAttribute("userid"));
-				    		System.out.println("로그인 처리 완료");
-			    		}
-			    		
-			    	}else{
-			    		session.setAttribute("loginState", "errorPW");
-			    	}
-			    }else{
-			    	session.setAttribute("loginState", "errorID");
-			    }
+				if(userID.equals(userid) && userPW.equals(userpasswd)){
+	                session.setAttribute("loginState", "login"); //현재 로그인상태인지 아닌지 체크한다. 
+	                session.setAttribute("usernum", usernum); //유저 번호 저장
+	                session.setAttribute("username", username); //유저 이름 저장
+	                session.setAttribute("userid", userid); //유저 아이디 저장
+	                session.setAttribute("userpw", userpasswd); //유저 비번 저장
+	                session.setAttribute("useremail", useremail); //유저 이메일 저장
+	                session.setAttribute("userphone", userphone); //유저 휴대폰 저장
+	                session.setAttribute("userclass", userclass); //유저 등급 저장
+	                session.setAttribute("userRRN", userRRN);
+	                System.out.println(session.getAttribute("userRRN"));
+	            }else{
+	                session.setAttribute("loginState", "errorPW");
+	                session.setAttribute("loginState", "errorID");
+	            }
 			
 		    break;
 		    
@@ -280,6 +271,69 @@
 				<%
 			}
 			break;
+		case "UPDATE":
+			mem_num = -1;
+			mem_name = null;
+			mem_id = null;
+			mem_passwd = null;
+			mem_email = null;
+			mem_phone = null;
+			mem_RRN = null;
+			mem_class = null;
+			memState = null;
+			boolean updatechk = Boolean.parseBoolean(request.getParameter("updatechk"));
+			System.out.println(updatechk+"형변환");
+			System.out.println(request.getParameter("updatechk"));
+			 if(!updatechk){
+				script.println("<script>");
+				script.println("history.back()");
+				script.println("</script>");
+				return;
+			} 
+		
+			
+			mem_num = Integer.parseInt(request.getParameter("mem_num"));
+			mem_name = request.getParameter("mem_name");
+			mem_id = request.getParameter("mem_id");
+			mem_passwd = request.getParameter("mem_passwd");
+			mem_email = request.getParameter("mem_email");
+			mem_phone = request.getParameter("mem_phone");
+			mem_class = request.getParameter("mem_class");
+			
+			memState = request.getParameter("memState");
+			
+			
+			sql = "update member set mem_name =?, mem_id =?, mem_passwd=?, mem_email=?, mem_phone =?,mem_class =? where mem_num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_name);
+			pstmt.setString(2, mem_id);
+			pstmt.setString(3, mem_passwd);
+			pstmt.setString(4, mem_email);
+			pstmt.setString(5, mem_phone);
+			
+			pstmt.setString(6, mem_class);
+			pstmt.setInt(7, mem_num);
+			
+	        
+			System.out.println(sql);
+			System.out.printf("%s %s %s %s %s %s %d",mem_name,mem_id, mem_passwd , mem_email, mem_phone,mem_class,mem_num);
+			result = pstmt.executeUpdate();
+			if(result == 1){
+				//PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('업데이트 성공.')");
+				script.println("</script>");
+			}
+			else{
+				//PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('업데이트 실패.')");
+				script.println("</script>");
+			}
+			
+			
+			break;
+			
 		default:
 			break;
 	}

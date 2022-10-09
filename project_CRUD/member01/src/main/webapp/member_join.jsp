@@ -38,6 +38,7 @@
 <title>회원가입</title>
 </head>
 <body>
+<%@ include file="./header.jsp" %>
 	<div class="container row">
 		<div class="col-lg-4"></div>
 		<div class="col-lg-7">
@@ -115,7 +116,7 @@
 		</div>
 		<div class="col-lg-4"></div>
 	</div>
-
+<%@ include file="./footer.jsp" %>
 </body>
 <script type="text/javascript">
 
