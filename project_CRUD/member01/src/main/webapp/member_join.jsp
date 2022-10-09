@@ -119,7 +119,6 @@
 <%@ include file="./footer.jsp" %>
 <script type="text/javascript">
     function checkRRN() {
-		<%System.out.println("함수 ");%>
         let sum = 0;
         let count = 2;
         let lastRRN = 0;
