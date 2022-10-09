@@ -67,7 +67,7 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
             <form class="validation-form" method="post" action="../member01/member_dao.jsp"> <!-- 경로 수정  !-->
 
                 <div class="form-group">
-                	<input class="form-control mb-2" type="text" name = "mem_name" value = <%=session.getAttribute("username")%>>             
+                	<input class="form-control mb-2" type="text" name = "mem_name" value = <%=session.getAttribute("username")%> required>             
                 </div>
 
                 <div class="form-group">
@@ -101,9 +101,13 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
                 <div class="form-group">
                     <input class="form-control mb-2" type="text" name="mem_class" placeholder="등급" value=<%=session.getAttribute("userclass")%> disabled>
                 </div>
-				
-                <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#exampleModal1">삭제</button>
+				<div>
+				<button type="submit" class="btn btn-danger float-right" data-toggle="modal" data-target="#exampleModal1" >삭제</button>
+				<input type="hidden" name="actionType" value="UPDATE">
+				</div>
+                
                 <button type="button" class="btn btn-primary float-right mx-2 "  data-toggle="modal" data-target="#exampleModal" >수정</button>
+                
                 <button type="button" class="btn btn-dark float-right" onclick="location.href='../member01/index.jsp'">취소</button>
             </form>
         </div>
@@ -127,8 +131,8 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
                     수정 하시겠습니까?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" >수정하기</button> <!-- 데이터 추가  -->
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> 닫기 </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick ="location.href='./mem_models/member_dao.jsp?actionType=UPDATE'">수정하기</button> <!-- 데이터 추가  -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
@@ -148,7 +152,7 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
                     삭제 하시겠습니까?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">삭제하기</button> <!-- 데이터 추가  -->
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick ="location.href='./mem_models/member_dao.jsp?actionType=DELETE'">삭제하기</button> <!-- 데이터 추가  -->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"> 닫기 </button>
                 </div>
             </div>

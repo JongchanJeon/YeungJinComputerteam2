@@ -188,6 +188,7 @@
 			mem_email = request.getParameter("mem_email");
 			mem_phone = request.getParameter("mem_phone");
 			mem_RRN = request.getParameter("mem_RRN");
+			System.out.println(mem_name);
 			
 		default:
 			break;
