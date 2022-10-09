@@ -10,6 +10,9 @@
 </head>
 <body>
  <hr>
- COPYRIGHT(C) KDHONG. ALL RIGHTS RESEVED. 
+ COPYRIGHT(C) TWOGETHER. ALL RIGHTS RESEVED. 
+ <div>
+ <a href ="./index.jsp">메인으로 가기</a>
+ </div>
 </body>
 </html>

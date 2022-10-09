@@ -3,6 +3,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,6 +208,73 @@
 <body>
 <%@ include file="../header.jsp" %>
 
+<%
+   String driverName = "org.mariadb.jdbc.Driver";
+   String url = "jdbc:mariadb://localhost/member_db";
+   String user = "root";
+   String passwd = "root";
+   
+   Class.forName(driverName);
+   Connection con = DriverManager.getConnection(url, user, passwd);
+   PreparedStatement pstmt = null;
+   request.setCharacterEncoding("UTF-8"); 
+%>
+
+<%
+	//user라는 클래스를 지닌 사람의 수만 조회한다 그외의 등급은 안함 사용자 중 등급을 나눴더라면 그사람들 조건 추가하기 (관리자 미포함)
+   String sql2 = "SELECT count(*) FROM member";
+   pstmt = con.prepareStatement(sql2);
+   ResultSet rs2= pstmt.executeQuery();
+   
+   int recordCnt =0;
+   int pageCnt;
+   int limitCnt = Integer.parseInt(request.getParameter("limitCnt"));/** limitCnt는 페이지를 제한하는 변수다.*/
+   int startRecord =0;
+   int currentPageNo;
+   
+   /** currentPageNo는 pageCnt에 의해서 정해진 페이지의 갯수를 뜻한다.*/
+   currentPageNo = Integer.parseInt(request.getParameter("currentPageNo"));
+   
+   //index.jsp에서 currentPageNo를 넘겨주는걸 getParameter로 받는다. 
+   /**startRecord는 테이블의 데이터 갯수*/
+   startRecord = currentPageNo * limitCnt;
+   //request의 요청을 받으면 response를 하게되는데 response는 html문서로 저장되어 있다.
+   
+   
+   while(rs2.next()){
+      recordCnt = rs2.getInt(1);
+   }
+   
+   pageCnt = recordCnt/limitCnt; //페이지를 10으로 나누었을때 딱 떨어지는 값만큼 페이지를 증가.
+   
+   //페이지를 10으로 나눈후 남은 몫이 존재할수 있으므로 그 값이 0이아닐 경우 pageCnt 1증가
+   if(recordCnt%limitCnt !=0){
+      pageCnt++;
+   }
+   System.out.println("member_m페이지 254번째줄쯤 입니다."+limitCnt);
+%>
+
+<%
+	int mem_num;
+   	String mem_name;
+	String mem_id;
+	String mem_passwd;
+	String mem_email;
+	String mem_phone;
+	String mem_RRN;
+	String mem_class;
+	
+	
+	//user만 조회할 수 있도록 한다. user중 등급을 추가한다면 조건을 추가하여서 생성
+   String sql = "SELECT mem_num, mem_name, mem_id,mem_passwd,mem_email,mem_phone,mem_RRN,mem_class FROM member ORDER BY mem_num limit ?,?";
+   pstmt = con.prepareStatement(sql);
+   pstmt.setInt(1,startRecord);
+   pstmt.setInt(2,limitCnt);
+   ResultSet rs = pstmt.executeQuery();
+   
+%>
+	
+			
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -215,14 +284,17 @@
                         <h2>관리자 <b>조회 수정</b></h2>
                     </div>
                     <div class="col-sm-2">
-                        <select class="custom-select">
-                            <option selected>10</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
+					   <form method="post" action="/member01/member_m.jsp">
+	                        <select class="custom-select" name = 'limitCnt'>
+	                            <option selected>10</option>
+	                            <option value="20">20</option>
+	                            <option value="30">30</option>
+	                            <option value="50">50</option>
+	                            <option value="100">100</option>
+	                        </select>
+	                        <input type = "hidden" name = "currentPageNo"  value =0>
+				      		<input type ="submit" value = "확인">
+	                   </form>
                     </div>
                 </div>
             </div>
@@ -240,37 +312,98 @@
                     <th>수정</th>
                 </tr>
                 </thead>
+               
                 <tbody>
                 <!-- while 문 변경 !-->
-                <tr>
-                    <td nowrap>홍길동</td>
-                    <td>kdhong</td>
-                    <td>1234</td>
-                    <td>010-1234-5678</td>
-                    <td>kdhong@gmail.com</td>
-                    <td>000122-1234567</td>
-                    <td>유저</td>
-                    <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                    </td>
-                </tr>
+                <%
+				while (rs.next()) {
+					mem_num =rs.getInt("mem_num");
+					mem_name =rs.getString("mem_name");
+					mem_id = rs.getString("mem_id");
+					mem_passwd =rs.getString("mem_passwd");
+					mem_email =rs.getString("mem_email");
+					mem_phone =rs.getString("mem_phone");
+					mem_RRN =rs.getString("mem_RRN");
+					mem_class =rs.getString("mem_class");
+				%>
+				<tr>
+					<th><%=mem_name%></th>
+					<th><%=mem_id%></th>
+					<th><%=mem_passwd%></th>
+					<th><%=mem_phone%></th>
+					<th><%=mem_email%></th>
+					<th><%=mem_RRN%></th>
+					<th><%=mem_class%></th>
+					<th>
+					
+					<a href="/member01/member_m2.jsp?mem_num=<%=mem_num %>&mem_name=<%=mem_name %>&mem_id=<%=mem_id %>&mem_passwd=<%=mem_passwd %>&mem_phone=<%=mem_phone %>&mem_email=<%=mem_email %>&mem_RRN=<%=mem_RRN %>&mem_class=<%=mem_class %>"> 
+					<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+					<!-- class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> -->
+					</th>
+					<!-- DB에 lock을 안 걸게되어서 id만 전송후에 where절을 통해 데이터베이스에서 셀렉트를해서 처리를 하는게 좋다. -->
+	
+				</tr>
+	
+				<%
+				}
+				pstmt.close();
+				con.close();
+				%>
+               
 
                 </tbody>
             </table>
+                       
+                    
+ 
 
             <!-- 페이징 수정 값 변경!-->
             <div class="clearfix">
                 <ul class="pagination">
-                
-                    <li class="page-item disabled"><a href="#">처음으로</a></li>
-                    <li class="page-item"><a href="#" class="page-link">이전</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item "><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">다음</a></li>
-                    <li class="page-item"><a href="#" class="page-link">마지막</a></li>
+                   <li class="page-item disabled"><a href="/member01/member_m.jsp?currentPageNo=0&limitCnt=<%=limitCnt%>">처음으로</a></li>
+				<%      
+				   
+				   if(currentPageNo > 0 ){
+				%>
+				  <li class="page-item"><a href="/member01/member_m.jsp?currentPageNo=<%=(currentPageNo-1) %>&limitCnt=<%=limitCnt%>" class="page-link">이전</a></li>
+				<%
+				   }
+				   else{
+				     
+				%>
+				 <li class="page-item">이전</li>
+				<%
+				   }
+				   for(int i = currentPageNo/10*10 ; i<( currentPageNo/10+1)*10; i++){
+					   if(i>pageCnt-1) break;
+				      if(i == currentPageNo){
+				%>
+				 [<%=(i+1) %>]
+				 <%
+				      }else{
+				 %>
+				   
+				     <li class="page-item"><a href="/member01/member_m.jsp?currentPageNo=<%=i %>&limitCnt=<%=limitCnt%>" class="page-link"><%=i+1 %></a></li>  
+				       <!--   <li class="page-item active"><a href="#" class="page-link">1</a></li> -->
+				 <%
+				      }
+				   }
+				   
+				   %>
+				<%
+				   if(currentPageNo < pageCnt - 1){
+				 %>
+				  <li class="page-item"><a href="/member01/member_m.jsp?currentPageNo=<%=(currentPageNo+1) %>&limitCnt=<%=limitCnt%>" class="page-link">다음</a></li>
+				 <%
+				   }else{
+				 %>
+				  <li class="page-item"><a href="#" class="page-link">다음</a></li>
+				 <%
+				   }
+				   pstmt.close();
+				   con.close();
+				 %>
+				 <li class="page-item"><a href="/member01/member_m.jsp?currentPageNo=<%=(pageCnt-1) %>&limitCnt=<%=limitCnt%>" class="page-link">마지막</a></li>    
                 </ul>
                 
             </div>
@@ -281,6 +414,7 @@
 
 
 <!-- 수정 모달  데이터 수정 !-->
+
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -291,10 +425,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input class="form-control mb-2" type="text" name="mem_name" placeholder="이름" value="" >
+                        <input class="form-control mb-2" type="text" name="mem_name" placeholder="이름" value= "">
                     </div>
                     <div class="form-group">
-                        <input class="form-control mb-2" type="text" name="mem_id" placeholder="아이디" value="" required disabled>
+                        <input class="form-control mb-2" type="text" name="mem_id" placeholder="아이디" value=""required disabled>
                     </div>
                     <div class="form-group">
                         <input class="form-control mb-2"  type="text" name="mem_passwd"  placeholder="비밀번호" value="" required>

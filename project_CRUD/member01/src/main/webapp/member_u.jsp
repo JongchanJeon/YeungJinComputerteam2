@@ -54,7 +54,7 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
 		mem_class = rs.getString("mem_class");
 		System.out.println(mem_RRN);
 		
-		System.out.println(session.getAttribute("userpw"));
+		System.out.println(session.getAttribute("mem_RRN"));
 	}
 %>
 
@@ -91,10 +91,10 @@ String sql = "select * from member where mem_id = '" + (String) session.getAttri
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control mb-2" id="mem_RRN1" placeholder="주민번호 ( 6자리 -" value=<%=String.valueOf(session.getAttribute("userRRN")).substring(0, 6) %> maxlength="6" required disabled> <!-- name 변경 !-->
+                        <input type="text" class="form-control mb-2" id="mem_RRN1" placeholder="주민번호 ( 6자리 -" value=<%=String.valueOf(session.getAttribute("userRRN")).substring(0, 6)%> maxlength="6" required disabled>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control mb-2" id="mem_RRN2" placeholder=" 7자리 )" value=<%=String.valueOf(session.getAttribute("userRRN")).substring(7, 14) %> maxlength="7" required disabled> <!-- name 변경 !-->
+                        <input type="text" class="form-control mb-2" id="mem_RRN2" placeholder=" 7자리 )" value=<%=String.valueOf(session.getAttribute("userRRN")).substring(7, 14) %> maxlength="7" required disabled>
                     </div>
                 </div>
 

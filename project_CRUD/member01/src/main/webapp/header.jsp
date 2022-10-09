@@ -26,6 +26,8 @@
 		session.setAttribute("userphone", null);
 		session.setAttribute("userclass", null);
 		session.setAttribute("username", null);
+		session.setAttribute("userRRN", null);
+		
 	}
 %>
 
@@ -68,7 +70,7 @@
 		<button type="submit" class="btn btn-primary">로그인</button>
 
 		</form>
-		<form method="post" action="/member01/mem_models/member_dao.jsp">
+		<form method="post" action="/member01/member_join.jsp">
 			<input type="hidden" name="actionType" value="REGISTER">
 		  	<button type="submit" class="btn btn-primary">회원가입</button>
 		</form>

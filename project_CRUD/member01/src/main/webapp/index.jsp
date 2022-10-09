@@ -20,18 +20,17 @@
 	System.out.println("[index.jsp] session loginState:" + session.getAttribute("loginState"));
 	
 	if(session.getAttribute("loginState").equals("login")){
-%>
-		 <jsp:include page="./login_page.jsp"/>
-<%
-	}else if (session.getAttribute("loginState").equals("managerLogin")){
-%>
-		 <jsp:include page="./manager_page.jsp"/>
-<%
- 	}else if (session.getAttribute("loginState").equals("register")){
-%>
- 		<jsp:include page="./member_join.jsp"/>
-<%
-	}else {
+		if (session.getAttribute("userclass").equals("manager")){
+			%>
+			<jsp:include page="./manager_page.jsp"/>
+			<%
+		}else if(session.getAttribute("userclass").equals("user")){
+			%>
+			<jsp:include page="./login_page.jsp"/>
+			<%
+		}
+
+ 	}else {
 %>
 		 <jsp:include page="./logout_page.jsp"/>
 <%
