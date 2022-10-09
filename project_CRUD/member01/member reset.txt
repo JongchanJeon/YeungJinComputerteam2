@@ -1,0 +1,28 @@
+
+drop database member_db;
+create database member_db;
+use member_db;
+
+create table member(
+    mem_num INT primary key auto_increment ,
+    mem_name varchar(30) NOT NULL,
+    mem_id varchar(30) NOT NULL UNIQUE ,
+    mem_passwd varchar(30) NOT NULL,
+    mem_email varchar(30) UNIQUE ,
+    mem_phone varchar(30) ,
+    mem_RRN varchar(30) NOT NULL UNIQUE ,
+    mem_class varchar(30) NOT NULL
+);
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('RYU','RYU', 'RYU', 'RYU@naver.com','010-1234-1234', '123456-1234567','admin');
+
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('WON','WON', 'WON', 'WON@naver.com','010-1234-1234', '123456-1234568','block');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('KYU','KYU', 'KYU', 'KYU@naver.com','010-1234-1234', '123456-1234569','user');
