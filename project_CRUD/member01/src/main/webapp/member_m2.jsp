@@ -70,7 +70,7 @@ String mem_class = request.getParameter("mem_class");
                     <br><button type="submit" id="updatechk" value="" onclick="updateid()" name="updatechk">수정
 					<input type="hidden" name="actionType" value="UPDATE"> 
 					<input type="hidden" name="mem_num" value=<%=mem_num%>>   
-					<input type="hidden" name="memState" value="admin"> 	
+					<input type="hidden" name="memState" value="manager"> 	
 					</button>
                 </div>
             </form>
