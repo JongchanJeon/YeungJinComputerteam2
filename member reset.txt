@@ -1,0 +1,76 @@
+drop database member_db;
+create database member_db;
+use member_db;
+
+create table member(
+    mem_num INT primary key auto_increment ,
+    mem_name varchar(30) NOT NULL,
+    mem_id varchar(30) NOT NULL UNIQUE ,
+    mem_passwd varchar(30) NOT NULL,
+    mem_email varchar(30) UNIQUE ,
+    mem_phone varchar(30) ,
+    mem_RRN varchar(30) NOT NULL UNIQUE ,
+    mem_class varchar(30) NOT NULL
+);
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('RYU','RYU', 'RYU', 'RYU@naver.com','010-1234-1234', '123456-1234567','manager');
+
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('WON','WON', 'WON', 'WON@naver.com','010-1234-1234', '123456-1234568','manager');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('KYU','KYU', 'KYU', 'KYU@naver.com','010-1234-1234', '123456-1234569','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('SUN','SUN', 'SUN', 'SUN@naver.com','010-1234-1234', '123456-1234560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('KIM','KIM', 'KIM', 'KIM@naver.com','010-1234-1234', '123456-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('PARK','PARK', 'PARK', 'PARK@naver.com','010-1234-1234', '143356-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('JIN','JIN', 'JIN', 'JIN@naver.com','010-1234-1234', '143343-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('SEOK','SEOK', 'SEOK', 'SEOK@naver.com','010-1234-1234', '343343-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('JEON','JEON', 'JEON', 'JEON@naver.com','010-1234-1234', '3432413-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('JONG','JONG', 'JONG', 'JONG@naver.com','010-1234-1234', '3432553-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('CHAN','CHAN', 'CHAN', 'CHAN@naver.com','010-1234-1234', '665553-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('JUN','JUN', 'JUN', 'JUN@naver.com','010-1234-1234', '665753-1542560','user');
+
+insert into member(mem_name, mem_id, mem_passwd, mem_email , mem_phone,
+mem_RRN , mem_class)
+values('HONG','HONG', 'HONG', 'HONG@naver.com','010-1234-1234', '665753-15425540','user');
+
+
+
+member_dao
+idCheckPro
+manager_m
+member_u
+
+041221-3681231
