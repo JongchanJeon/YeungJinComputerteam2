@@ -72,7 +72,7 @@
 		   pstmt.setString(4, mem_email);
 		   pstmt.setString(5, mem_phone);
 		   pstmt.setString(6, mem_RRN);
-		   pstmt.setString(7, "user");
+		   pstmt.setString(7, "'user'");
 		
 		
 		int result = pstmt.executeUpdate();

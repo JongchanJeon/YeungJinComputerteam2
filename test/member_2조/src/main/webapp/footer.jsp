@@ -26,7 +26,7 @@
 	</div>
 	<div style="float: left; max-width:540px;">
 		<small>41527 대구광역시 북구 복현로 35 영진전문대학교 컴퓨터정보계열 2WD-A<br>
-		웹프로그래밍I 2조: 전종찬, 김선미, 김탁영, 박준홍, 박진석, 우원규<br>
+		웹프로그래밍I 2조: 전종찬, 김선미, 김탁영, 박준홍, 박진석, 유원규<br>
 		COPYRIGHT(C) TwoGether. ALL RIGHTS RESEVED.</small>
 	</div>
 	<div style="float: right; margin: 10px 20px;">
