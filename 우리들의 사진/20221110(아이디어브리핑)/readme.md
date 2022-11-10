@@ -2,7 +2,7 @@
 
 <br>
 
-![220923_DB 2차 회의](https://user-images.githubusercontent.com/103109563/192730004-44048e84-abfc-4598-b2c3-9ac070911dff.jpg)
+![image](https://user-images.githubusercontent.com/103583674/201034097-d6d3d9d5-9b1d-4fe6-8abc-e9d5fb8486a9.png)
 
 
 <br>
